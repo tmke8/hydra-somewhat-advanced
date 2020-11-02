@@ -1,0 +1,6 @@
+# @package _group_
+defaults:
+ - model/schema/mlp
+ - _self_
+
+hidden_units: 20

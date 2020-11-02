@@ -1,0 +1,7 @@
+# @package _group_
+defaults:
+ - model/schema/svm
+ - _self_
+
+C: 0.1
+kernel: Linear
