@@ -1,2 +1,5 @@
 defaults:
   - hydra/launcher: basic
+
+  - model: svm_default
+  - dataset: adult_default

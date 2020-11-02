@@ -4,7 +4,7 @@ from typing import cast
 
 import hydra
 from hydra.core.config_store import ConfigStore
-from omegaconf import OmegaConf
+from omegaconf import OmegaConf, MISSING
 
 from utils import flatten
 
@@ -50,8 +50,8 @@ class AdultConfig(DatasetConfig):
 @dataclass
 class Config:
     """Main config class."""
-    model: ModelConfig = SVMConfig()
-    dataset: DatasetConfig = AdultConfig()
+    model: ModelConfig = MISSING
+    dataset: DatasetConfig = MISSING
     seed: int = 42
     data_pcnt: float = 1.0
     use_wandb: bool = False

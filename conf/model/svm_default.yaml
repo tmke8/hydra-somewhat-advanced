@@ -1,0 +1,4 @@
+# @package _group_
+defaults:
+ - model/schema/svm
+ - _self_
