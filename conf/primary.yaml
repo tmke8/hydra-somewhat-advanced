@@ -1,5 +1,13 @@
 defaults:
-  - hydra/launcher: basic
-
+  # - hydra/launcher: ray_local
   - model: svm_default
   - dataset: adult_default
+
+# hydra:
+#   launcher:
+#     ray_init_cfg:
+#       num_gpus: null
+#       num_cpus: null
+#       address: auto
+#     ray_remote_cfg:
+#       num_cpus: 1
