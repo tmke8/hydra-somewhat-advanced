@@ -67,7 +67,7 @@ cs.store(
     node=MlpConfig,  # class that defines the config
     name="mlp",  # the name under which this config will be accessible
     package="model",  # entry in `Config` where this should be stored
-    group="model/schema",  # (not sure what this is for)
+    group="model/schema",  # specify a key under which this scheme can be selected
 )
 cs.store(node=SVMConfig, name="svm", package="model", group="model/schema")
 cs.store(node=CmnistConfig, name="cmnist", package="dataset", group="dataset/schema")

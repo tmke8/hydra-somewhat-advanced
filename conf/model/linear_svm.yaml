@@ -1,6 +1,6 @@
 # @package _group_
 defaults:
- - model/schema/svm
+ - model/schema: svm  # select scheme
  - _self_
 
 C: 0.1
