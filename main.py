@@ -4,23 +4,28 @@ from typing import cast
 
 import hydra
 from hydra.core.config_store import ConfigStore
-from omegaconf import OmegaConf, MISSING
+from hydra.utils import instantiate
+from omegaconf import MISSING, OmegaConf
 
+from custom_types import PathWrapper
 from utils import flatten
 
-
 # ============== model configs ================
+
 
 @dataclass
 class ModelConfig:
     """Base config for all models."""
+
 
 @dataclass
 class MlpConfig(ModelConfig):
     layers: int = 3
     hidden_units: int = 10
 
+
 Kern = Enum("Kern", ["Linear", "RBF", "Poly"])
+
 
 @dataclass
 class SVMConfig(ModelConfig):
@@ -30,14 +35,19 @@ class SVMConfig(ModelConfig):
 
 # ============== dataset configs ================
 
+
 @dataclass
 class DatasetConfig:
     """Base class of data configs."""
+
+    dir: PathWrapper = MISSING
+
 
 @dataclass
 class CmnistConfig(DatasetConfig):
     padding: int = 2
     color_background: bool = False
+
 
 @dataclass
 class AdultConfig(DatasetConfig):
@@ -47,9 +57,11 @@ class AdultConfig(DatasetConfig):
 
 # ============== main config ================
 
+
 @dataclass
 class Config:
     """Main config class."""
+
     model: ModelConfig = MISSING
     dataset: DatasetConfig = MISSING
     seed: int = 42
@@ -76,6 +88,7 @@ cs.store(node=AdultConfig, name="adult", package="dataset", group="dataset/schem
 
 # =============== main function =================
 
+
 @hydra.main(config_path="conf", config_name="primary")
 def my_app(cfg: Config) -> None:
     if OmegaConf.get_type(cfg.model) is MlpConfig:
@@ -91,6 +104,8 @@ def my_app(cfg: Config) -> None:
 
     print()
 
+    data_dir = instantiate(cfg.dataset.dir)
+    print(data_dir)
     if OmegaConf.get_type(cfg.dataset) is AdultConfig:
         adult_cfg = cast(AdultConfig, cfg.dataset)
         print("using Adult dataset")
@@ -99,7 +114,7 @@ def my_app(cfg: Config) -> None:
         cmnist_cfg = cast(CmnistConfig, cfg.dataset)
         print("using CMNIST dataset")
         print(f"{cmnist_cfg.padding=}")
-    
+
     print()
     print(f"{cfg.seed=}")
     print(f"{cfg.use_wandb=}")
