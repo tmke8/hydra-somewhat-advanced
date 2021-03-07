@@ -1,4 +1,5 @@
 defaults:
+  - primary_schema
   # - hydra/launcher: ray_local
   - model: svm_default
   - dataset: adult_default

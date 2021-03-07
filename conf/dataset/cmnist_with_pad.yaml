@@ -1,6 +1,6 @@
-# @package _group_
 defaults:
- - dataset/schema/cmnist
- - _self_
+ - /dataset/schema/cmnist
 
 padding: 2
+dir:
+  path: "../data/cmnist"

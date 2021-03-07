@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-from enum import Enum
+from enum import Enum, auto
+from pathlib import Path
 from typing import cast
 
 import hydra
@@ -24,7 +25,10 @@ class MlpConfig(ModelConfig):
     hidden_units: int = 10
 
 
-Kern = Enum("Kern", ["Linear", "RBF", "Poly"])
+class Kern(Enum):
+    linear = auto()
+    RBF = auto()
+    poly = auto()
 
 
 @dataclass
@@ -73,7 +77,7 @@ class Config:
 
 # ConfigStore enables type validation
 cs = ConfigStore.instance()
-cs.store(name="primary", node=Config)
+cs.store(name="primary_schema", node=Config)
 # register the subconfigs
 cs.store(
     node=MlpConfig,  # class that defines the config
@@ -104,7 +108,7 @@ def my_app(cfg: Config) -> None:
 
     print()
 
-    data_dir = instantiate(cfg.dataset.dir)
+    data_dir: Path = instantiate(cfg.dataset.dir)
     print(data_dir)
     if OmegaConf.get_type(cfg.dataset) is AdultConfig:
         adult_cfg = cast(AdultConfig, cfg.dataset)
@@ -122,7 +126,7 @@ def my_app(cfg: Config) -> None:
 
     print()
     print("Config as flat dictionary:")
-    print(flatten(OmegaConf.to_container(cfg)))
+    print(flatten(OmegaConf.to_container(cfg, enum_to_str=True)))
 
 
 if __name__ == "__main__":

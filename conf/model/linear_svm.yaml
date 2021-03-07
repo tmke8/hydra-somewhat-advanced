@@ -1,7 +1,5 @@
-# @package _group_
 defaults:
- - model/schema: svm  # select scheme
- - _self_
+ - /model/schema: svm  # select scheme
 
 C: 0.1
 kernel: Linear

@@ -1,7 +1,5 @@
-# @package _group_
 defaults:
-  - dataset/schema/adult
-  - _self_
+  - /dataset/schema/adult
 
 dir:  # hi
   path: "../data"
