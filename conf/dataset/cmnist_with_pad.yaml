@@ -2,5 +2,5 @@ defaults:
  - /dataset/schema/cmnist
 
 padding: 2
-dir:
-  path: "../data/cmnist"
+dir: !!python/object/apply:pathlib.PosixPath
+ - "../data/cmnist"

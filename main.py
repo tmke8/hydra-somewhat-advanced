@@ -1,14 +1,11 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum, auto
 from pathlib import Path
-from typing import cast
 
 import hydra
 from hydra.core.config_store import ConfigStore
-from hydra.utils import instantiate
-from omegaconf import MISSING, OmegaConf
+from omegaconf import OmegaConf, DictConfig
 
-from custom_types import PathWrapper
 from utils import flatten
 
 # ============== model configs ================
@@ -44,7 +41,7 @@ class SVMConfig(ModelConfig):
 class DatasetConfig:
     """Base class of data configs."""
 
-    dir: PathWrapper = MISSING
+    dir: Path
 
 
 @dataclass
@@ -66,11 +63,13 @@ class AdultConfig(DatasetConfig):
 class Config:
     """Main config class."""
 
-    model: ModelConfig = MISSING
-    dataset: DatasetConfig = MISSING
+    model: ModelConfig
+    dataset: DatasetConfig
     seed: int = 42
     data_pcnt: float = 1.0
     use_wandb: bool = False
+    # unfortunately, hydra completely ignore the `init=False` directive
+    use_cuda: bool = field(init=False, default=False)
 
 
 # ============== register config classes ================
@@ -93,29 +92,31 @@ cs.store(node=AdultConfig, name="adult", package="dataset", group="dataset/schem
 # =============== main function =================
 
 
-@hydra.main(config_path="conf", config_name="primary")
-def my_app(cfg: Config) -> None:
-    if OmegaConf.get_type(cfg.model) is MlpConfig:
-        mlp_cfg = cast(MlpConfig, cfg.model)
+@hydra.main(config_path="conf", config_name="primary", version_base="1.2")
+def my_app(hydra_cfg: DictConfig) -> None:
+    # convert the dict-like hydra config into a real `Config` object
+    cfg: Config = OmegaConf.to_object(hydra_cfg)  # type: ignore
+
+    if isinstance(cfg.model, MlpConfig):
         print("using MLP")
-        print(f"{mlp_cfg.layers=}")
-        print(f"{mlp_cfg.hidden_units=}")
-    elif OmegaConf.get_type(cfg.model) is SVMConfig:
-        svm_cfg = cast(SVMConfig, cfg.model)
+        mlp = cfg.model
+        print(f"{mlp.layers=}")
+        print(f"{mlp.hidden_units=}")
+    elif isinstance(cfg.model, SVMConfig):
         print("using SVM")
-        print(f"{svm_cfg.kernel=}")
-        print(f"{svm_cfg.C=}")
+        svm = cfg.model
+        print(f"{svm.kernel=}")
+        print(f"{svm.C=}")
 
     print()
 
-    data_dir: Path = instantiate(cfg.dataset.dir)
-    print(data_dir)
-    if OmegaConf.get_type(cfg.dataset) is AdultConfig:
-        adult_cfg = cast(AdultConfig, cfg.dataset)
+    print(f"data dir: '{cfg.dataset.dir}'")
+    if isinstance(cfg.dataset, AdultConfig):
+        adult_cfg = cfg.dataset
         print("using Adult dataset")
         print(f"{adult_cfg.drop_native=}")
-    elif OmegaConf.get_type(cfg.dataset) is CmnistConfig:
-        cmnist_cfg = cast(CmnistConfig, cfg.dataset)
+    elif isinstance(cfg.dataset, CmnistConfig):
+        cmnist_cfg = cfg.dataset
         print("using CMNIST dataset")
         print(f"{cmnist_cfg.padding=}")
 
@@ -123,10 +124,11 @@ def my_app(cfg: Config) -> None:
     print(f"{cfg.seed=}")
     print(f"{cfg.use_wandb=}")
     print(f"{cfg.data_pcnt=}")
+    print(f"{cfg.use_cuda=}")
 
     print()
     print("Config as flat dictionary:")
-    print(flatten(OmegaConf.to_container(cfg, enum_to_str=True)))
+    print(flatten(OmegaConf.to_container(hydra_cfg, enum_to_str=True)))  # type: ignore
 
 
 if __name__ == "__main__":

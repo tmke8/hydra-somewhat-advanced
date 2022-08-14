@@ -2,5 +2,4 @@ defaults:
  - /dataset/schema/cmnist
 
 padding: 0
-dir:
-  path: "../data/cmnist"
+dir: "../data/cmnist"

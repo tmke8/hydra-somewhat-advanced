@@ -1,5 +1,4 @@
 defaults:
   - /dataset/schema/adult
 
-dir:  # hi
-  path: "../data"
+dir: "../data"

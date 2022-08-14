@@ -1,8 +1,8 @@
-# Simple example for using hydra
+# Somewhat advanced example of using hydra
 
-This example is without object instantiation.
+This example is without the `instantiate()` functionality.
 
-It is mostly `main.py` which is important.
+It is mostly `main.py` that is important.
 
 ## Example output
 
