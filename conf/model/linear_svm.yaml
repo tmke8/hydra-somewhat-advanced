@@ -1,5 +1,5 @@
 defaults:
- - /model/schema: svm  # select scheme
+ - svm
 
 C: 0.1
 kernel: Linear

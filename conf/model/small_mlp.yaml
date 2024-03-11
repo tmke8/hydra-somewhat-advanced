@@ -1,4 +1,4 @@
 defaults:
- - /model/schema/mlp
+ - mlp
 
 hidden_units: 20

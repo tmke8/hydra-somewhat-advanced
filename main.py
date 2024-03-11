@@ -68,8 +68,9 @@ class Config:
     seed: int = 42
     data_pcnt: float = 1.0
     use_wandb: bool = False
-    # unfortunately, hydra completely ignore the `init=False` directive
-    use_cuda: bool = field(init=False, default=False)
+    use_cuda: bool = field(
+        default=False, init=False, metadata={"omegaconf_ignore": True}
+    )
 
 
 # ============== register config classes ================
@@ -81,18 +82,17 @@ cs.store(name="primary_schema", node=Config)
 cs.store(
     node=MlpConfig,  # class that defines the config
     name="mlp",  # the name under which this config will be accessible
-    package="model",  # entry in `Config` where this should be stored
-    group="model/schema",  # specify a key under which this scheme can be selected
+    group="model",  # entry in `Config` where this will be used
 )
-cs.store(node=SVMConfig, name="svm", package="model", group="model/schema")
-cs.store(node=CmnistConfig, name="cmnist", package="dataset", group="dataset/schema")
-cs.store(node=AdultConfig, name="adult", package="dataset", group="dataset/schema")
+cs.store(node=SVMConfig, name="svm", group="model")
+cs.store(node=CmnistConfig, name="cmnist", group="dataset")
+cs.store(node=AdultConfig, name="adult", group="dataset")
 
 
 # =============== main function =================
 
 
-@hydra.main(config_path="conf", config_name="primary", version_base="1.2")
+@hydra.main(config_path="conf", config_name="primary", version_base="1.3")
 def my_app(hydra_cfg: DictConfig) -> None:
     # convert the dict-like hydra config into a real `Config` object
     cfg: Config = OmegaConf.to_object(hydra_cfg)  # type: ignore

@@ -1,5 +1,5 @@
 defaults:
- - /dataset/schema/cmnist
+ - cmnist
 
 padding: 0
 dir: "../data/cmnist"
