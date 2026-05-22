@@ -1,6 +1,0 @@
----
-defaults:
-  # use absolute path here because this config file is imported elsewhere
-  - /model/mlp/small@_here_
-
-dropout: 0.1

@@ -1,0 +1,6 @@
+---
+defaults:
+  - mlp
+
+hidden_units: 20
+layers: 2

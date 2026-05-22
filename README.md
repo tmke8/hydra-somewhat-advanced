@@ -29,11 +29,11 @@ python main.py seed=12
 ```
 
 ```sh
-python main.py model=linear_svm seed=12 data=cmnist_no_pad
+python main.py model=svm_linear seed=12 data=cmnist_no_pad
 ```
 
 ```sh
-python main.py model=mlp/small model.layers=10
+python main.py model=mlp_small model.layers=10
 ```
 
 ```sh

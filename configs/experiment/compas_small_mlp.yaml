@@ -2,7 +2,7 @@
 ---
 defaults:
   - override /data: compas_with_default_dir
-  - override /model: mlp/small_dropout
+  - override /model: mlp_small_dropout
 
 seed: 1
 gpu: 0

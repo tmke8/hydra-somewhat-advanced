@@ -1,0 +1,5 @@
+---
+defaults:
+  - mlp_small
+
+dropout: 0.1
