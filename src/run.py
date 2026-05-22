@@ -90,10 +90,13 @@ class Config:
     seed: int = 42
     data_pcnt: float = 1.0
     wandb: Literal["online", "offline", "disabled"] = "online"
+    gpu: int = 0  # Set to -1 to use CPU.
+    
+    # This field is not meant to be set by the user, but is instead set by the code
+    # based on the value of `gpu` and the availability of CUDA.
     use_cuda: bool = field(
         default=False, init=False, metadata={"omegaconf_ignore": True}
     )
-    gpu: int = 0  # Set to -1 to use CPU.
 
 
 # Config groups enable us to have different configurations for different subcomponents.
@@ -118,6 +121,8 @@ def run(cfg: Config) -> None:
         print("Using COMPAS data.")
     elif isinstance(cfg.data, CmnistCfg):
         print("Using CMNIST dataset.")
+
+    cfg.use_cuda = cfg.gpu >= 0
 
     print()
     print(cfg)
