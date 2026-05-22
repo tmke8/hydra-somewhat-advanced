@@ -2,7 +2,7 @@
 ---
 defaults:
   - compas_small_mlp
+  - /opt: low_lr_long
 
 opt:
-  lr: 1.0e-6
-  epochs: 100
+  batch_size: 32
