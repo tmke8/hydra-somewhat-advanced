@@ -1,0 +1,8 @@
+---
+defaults:
+  - root_schema
+  # Set the defaults for the two sub-configs.
+  - model: svm
+  - data: compas_with_default_dir
+
+# Note: don't put anything else in here; instead rely on the default values in the root dataclass

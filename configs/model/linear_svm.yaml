@@ -1,5 +1,6 @@
+---
 defaults:
  - svm
 
 C: 0.1
-kernel: Linear
+kernel: linear

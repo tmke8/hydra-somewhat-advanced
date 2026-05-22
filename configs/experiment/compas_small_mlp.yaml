@@ -1,0 +1,15 @@
+# @package _global_
+---
+defaults:
+  - override /data: compas_with_default_dir
+  - override /model: mlp/small_dropout
+
+seed: 1
+gpu: 0
+
+model:
+  activation: selu
+
+opt:
+  lr: 0.001
+  batch_size: 64

@@ -1,0 +1,6 @@
+---
+defaults:
+ - cmnist
+
+padding: 0
+dir: "../data/cmnist"

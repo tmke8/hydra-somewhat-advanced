@@ -1,4 +1,5 @@
+---
 defaults:
-  - adult
+  - compas
 
 dir: "../data"

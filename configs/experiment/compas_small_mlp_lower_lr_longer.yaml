@@ -1,0 +1,8 @@
+# @package _global_
+---
+defaults:
+  - compas_small_mlp
+
+opt:
+  lr: 1.0e-6
+  epochs: 100

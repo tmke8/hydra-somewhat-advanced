@@ -1,22 +1,34 @@
-[tool.poetry]
-name = "hydra-test"
+[project]
+name = "hydra-somewhat-advanced"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = [{ name = "Thomas M Kehrenberg", email = "tmke8@posteo.net" }]
+requires-python = ">=3.11,<4"
+dependencies = [
+    "omegaconf==2.4.0.dev11",
+    "hydra-core==1.4.0.dev1",
+]
 
-[tool.poetry.dependencies]
-python = "^3.8"
-omegaconf = "^2.2"
-hydra-core = "^1.2"
+[tool.ruff]
+line-length = 88
+target-version = "py311"
 
-[tool.poetry.dev-dependencies]
-mypy = "^0.971"
-
-[tool.mypy]
-python_version = "3.8"
-strict = true
-disallow_any_generics = true
-
-[build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+[tool.pyright]
+typeCheckingMode = "strict"
+pythonVersion = "3.11"
+reportMissingTypeArgument = "none"
+reportUnnecessaryComparison = "none"
+reportCallInDefaultInitializer = "warning"
+reportPropertyTypeMismatch = "warning"
+reportUninitializedInstanceVariable = "warning"
+reportPrivateUsage = "warning"
+reportUnnecessaryTypeIgnoreComment = "warning"
+reportConstantRedefinition = "warning"
+# these errors are a bit annoying
+reportUnknownMemberType = "none"
+reportUnknownVariableType = "none"
+reportUnknownParameterType = "none"
+reportUnknownArgumentType = "none"
+reportUnknownLambdaType = "none"
+venvPath = "."
+venv = ".venv"

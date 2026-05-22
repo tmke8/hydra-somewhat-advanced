@@ -1,24 +1,47 @@
 # Somewhat advanced example of using hydra
 
-This example is without the `instantiate()` functionality.
+This example is without the `instantiate()` functionality (which allows instantiating arbitrary classes), but otherwise uses all of the core hydra concepts in some way.
 
-It is mostly `main.py` that is important.
+## Installation
 
-## Example output
+Either with pip:
 
+```sh
+pip install -r pylock.toml
 ```
-$ python main.py
-using SVM
-svm_cfg.kernel=<Kern.RBF: 2>
-svm_cfg.C=1.0
 
-using Adult dataset
-adult_cfg.drop_native=False
+or with uv:
 
-cfg.seed=42
-cfg.use_wandb=False
-cfg.data_pcnt=1.0
+```sh
+uv sync
+```
 
-Config as flat dictionary:
-{'model.kernel': <Kern.RBF: 2>, 'model.C': 1.0, 'dataset.drop_native': False, 'dataset.drop_discrete': False, 'seed': 42, 'data_pcnt': 1.0, 'use_wandb': False}
+## Usage
+
+Try running these commands and observe the output.
+
+```sh
+python main.py
+```
+
+```sh
+python main.py seed=12
+```
+
+```sh
+python main.py model=linear_svm seed=12 data=cmnist_no_pad
+```
+
+```sh
+python main.py model=mlp/small model.layers=10
+```
+
+```sh
+python main.py +experiment=compas_small_mlp_lower_lr_longer model.dropout=0.2
+```
+
+Notice that the following fails because of the negative dropout probability:
+
+```sh
+python main.py +experiment=compas_small_mlp_lower_lr_longer model.dropout=-0.2
 ```

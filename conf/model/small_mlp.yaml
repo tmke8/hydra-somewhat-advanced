@@ -1,4 +1,0 @@
-defaults:
- - mlp
-
-hidden_units: 20

@@ -1,6 +1,0 @@
-defaults:
- - cmnist
-
-padding: 2
-dir: !!python/object/apply:pathlib.PosixPath
- - "../data/cmnist"
