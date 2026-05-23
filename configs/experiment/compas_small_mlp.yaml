@@ -1,6 +1,7 @@
 # @package _global_
 ---
 defaults:
+  # We need to say "override" here because we already specified these in `root.yaml`.
   - override /data: compas_with_default_dir
   - override /model: mlp_small_dropout
 
